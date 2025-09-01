@@ -2,12 +2,12 @@ import {
   check,
   index,
   integer,
-  text,
+  pgEnum,
   pgTable,
-  varchar,
+  text,
   timestamp,
   uuid,
-  pgEnum,
+  varchar,
 } from "drizzle-orm/pg-core";
 import { productVariants } from "./product.schema";
 import { relations, sql } from "drizzle-orm";
@@ -62,7 +62,6 @@ export const inventory = pgTable(
     // Check constraints
     check("non_negative_on_hand", sql`quantity_on_hand >= 0`),
     check("non_negative_reserved", sql`quantity_reserved >= 0`),
-    check("non_negative_on_hand", sql`quantity_on_hand >= 0`),
     check(
       "reserved_not_exceed_on_hand",
       sql`quantity_reserved <= quantity_on_hand`,

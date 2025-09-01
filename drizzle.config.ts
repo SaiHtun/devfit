@@ -1,11 +1,11 @@
 import { defineConfig } from "drizzle-kit";
-import { getEnvVar } from "./lib/utils";
+import { config } from "./app-config";
 
 export default defineConfig({
   out: "./drizzle",
-  schema: "./db/schema.ts",
+  schema: "./db/schema",
   dialect: "postgresql",
   dbCredentials: {
-    url: getEnvVar("DATABASE_URL"),
+    url: config.supabase.databaseUrl,
   },
 });
