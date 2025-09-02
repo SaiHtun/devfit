@@ -16,7 +16,7 @@ import {
   inventoryReservations,
   inventoryTransactions,
 } from "./inventory.schema";
-
+import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
 // ==================
 // ENUMS
 // ==================
@@ -130,9 +130,16 @@ export const productVairantsRelations = relations(
 );
 
 // ==================
+// ZOD VALIDATOR EXPORTS
+// ==================
+export const productInsertSchema = createInsertSchema(products);
+export const productUpdateSchema = createUpdateSchema(products);
+
+export const productVariantInsertSchema = createInsertSchema(productVariants);
+export const productVariantUpdateSchema = createUpdateSchema(productVariants);
+// ==================
 // TYPE EXPORTS
 // ==================
-
 export type Product = typeof products.$inferSelect;
 export type NewProduct = typeof products.$inferInsert;
 
