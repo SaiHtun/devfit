@@ -47,12 +47,13 @@ export const products = pgTable(
     description: text("description"),
     category: productCategoryEnum("category").notNull(),
     tags: text("tags").array(),
-    customizableAreas: jsonb("customizable_areas").$type<
-      Array<{
-        area: (typeof customizableAreaEnum.enumValues)[number];
-        maxSize: { width: number; height: number };
-      }>
-    >(),
+    customizableAreas:
+      jsonb("customizable_areas").$type<
+        Array<{
+          area: (typeof customizableAreaEnum.enumValues)[number];
+          maxSize: { width: number; height: number };
+        }>
+      >(),
 
     createdAt: timestamp("created_at", { withTimezone: true })
       .defaultNow()

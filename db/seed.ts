@@ -88,8 +88,8 @@ const seedData = async () => {
     const variantData = [];
 
     // T-Shirt variants
-    const tshirtProduct = insertedProducts.find((p) =>
-      p.category === "t-shirt"
+    const tshirtProduct = insertedProducts.find(
+      (p) => p.category === "t-shirt",
     );
     if (!tshirtProduct) throw new Error("T-shirt product not found");
     const tshirtSizes = ["XS", "S", "M", "L", "XL", "XXL"];
@@ -104,9 +104,9 @@ const seedData = async () => {
       for (const colorInfo of tshirtColors) {
         variantData.push({
           productId: tshirtProduct.id,
-          sku: `${
-            getInitials(tshirtProduct.name)
-          }-${size}-${colorInfo.color.toUpperCase()}`,
+          sku: `${getInitials(
+            tshirtProduct.name,
+          )}-${size}-${colorInfo.color.toUpperCase()}`,
           size,
           color: colorInfo.color,
           colorHex: colorInfo.hex,
@@ -126,8 +126,8 @@ const seedData = async () => {
     }
 
     // Polo Shirt variants
-    const poloProduct = insertedProducts.find((p) =>
-      p.category === "polo-shirt"
+    const poloProduct = insertedProducts.find(
+      (p) => p.category === "polo-shirt",
     );
     if (!poloProduct) throw new Error("Polo product not found");
     const poloSizes = ["S", "M", "L", "XL", "XXL"];
@@ -141,9 +141,9 @@ const seedData = async () => {
       for (const colorInfo of poloColors) {
         variantData.push({
           productId: poloProduct.id,
-          sku: `${
-            getInitials(poloProduct.name)
-          }-${size}-${colorInfo.color.toUpperCase()}`,
+          sku: `${getInitials(
+            poloProduct.name,
+          )}-${size}-${colorInfo.color.toUpperCase()}`,
           size,
           color: colorInfo.color,
           colorHex: colorInfo.hex,
@@ -163,9 +163,7 @@ const seedData = async () => {
     }
 
     // Hoodie variants
-    const hoodieProduct = insertedProducts.find((p) =>
-      p.category === "hoodie"
-    );
+    const hoodieProduct = insertedProducts.find((p) => p.category === "hoodie");
     if (!hoodieProduct) throw new Error("Hoodie product not found");
     const hoodieSizes = ["S", "M", "L", "XL", "XXL"];
     const hoodieColors = [
@@ -178,9 +176,9 @@ const seedData = async () => {
       for (const colorInfo of hoodieColors) {
         variantData.push({
           productId: hoodieProduct.id,
-          sku: `${
-            getInitials(hoodieProduct.name)
-          }-${size}-${colorInfo.color.toUpperCase()}`,
+          sku: `${getInitials(
+            hoodieProduct.name,
+          )}-${size}-${colorInfo.color.toUpperCase()}`,
           size,
           color: colorInfo.color,
           colorHex: colorInfo.hex,
@@ -200,9 +198,7 @@ const seedData = async () => {
     }
 
     // Tote Bag variants
-    const toteProduct = insertedProducts.find((p) =>
-      p.category === "tote-bag"
-    );
+    const toteProduct = insertedProducts.find((p) => p.category === "tote-bag");
     if (!toteProduct) throw new Error("Tote product not found");
     const toteColors = [
       { color: "Natural", hex: "#f5f5dc" },
@@ -212,9 +208,9 @@ const seedData = async () => {
     for (const colorInfo of toteColors) {
       variantData.push({
         productId: toteProduct.id,
-        sku: `${
-          getInitials(toteProduct.name)
-        }-${colorInfo.color.toUpperCase()}`,
+        sku: `${getInitials(
+          toteProduct.name,
+        )}-${colorInfo.color.toUpperCase()}`,
         color: colorInfo.color,
         colorHex: colorInfo.hex,
         weightGrams: 120,
