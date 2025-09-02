@@ -10,7 +10,7 @@ import { z } from "zod";
 
 export async function GET(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url);
+    const searchParams = req.nextUrl.searchParams;
     const category = searchParams.get("category");
     const limit = searchParams.get("limit");
     const offset = searchParams.get("offset");

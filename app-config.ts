@@ -1,4 +1,4 @@
-import z, { ZodError } from "zod";
+import z from "zod";
 import { loadEnvConfig } from "@next/env";
 
 const isDevelopment = process.env.NODE_ENV === "development";
@@ -24,7 +24,7 @@ function validateEnv() {
     const parsedEnv = envSchema.parse(process.env);
     return parsedEnv;
   } catch (e) {
-    if (e instanceof ZodError) {
+    if (e instanceof z.ZodError) {
       console.error("❌ Invalid environment variables: \n", e);
       process.exit(1);
     }
