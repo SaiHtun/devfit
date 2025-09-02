@@ -1,14 +1,14 @@
 import {
-  varchar,
-  pgEnum,
-  pgTable,
-  uuid,
-  text,
-  timestamp,
-  index,
   decimal,
+  index,
   integer,
   jsonb,
+  pgEnum,
+  pgTable,
+  text,
+  timestamp,
+  uuid,
+  varchar,
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm/relations";
 import {
@@ -47,18 +47,17 @@ export const products = pgTable(
     description: text("description"),
     category: productCategoryEnum("category").notNull(),
     tags: text("tags").array(),
-    customizableAreas:
-      jsonb("customizable_areas").$type<
-        Array<{
-          area: typeof customizableAreaEnum;
-          maxSize: { width: number; height: number };
-        }>
-      >(),
+    customizableAreas: jsonb("customizable_areas").$type<
+      Array<{
+        area: (typeof customizableAreaEnum.enumValues)[number];
+        maxSize: { width: number; height: number };
+      }>
+    >(),
 
     createdAt: timestamp("created_at", { withTimezone: true })
       .defaultNow()
       .notNull(),
-    updatedAt: timestamp("created_at", { withTimezone: true })
+    updatedAt: timestamp("updated_at", { withTimezone: true })
       .defaultNow()
       .notNull(),
   },
@@ -97,7 +96,7 @@ export const productVariants = pgTable(
     createdAt: timestamp("created_at", { withTimezone: true })
       .defaultNow()
       .notNull(),
-    updatedAt: timestamp("created_at", { withTimezone: true })
+    updatedAt: timestamp("updated_at", { withTimezone: true })
       .defaultNow()
       .notNull(),
   },

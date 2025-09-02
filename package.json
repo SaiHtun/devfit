@@ -11,7 +11,8 @@
     "db:gen": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
-    "db:pull": "drizzle-kit pull"
+    "db:pull": "drizzle-kit pull",
+    "db:seed": "NODE_ENV=development tsx db/seed.ts"
   },
   "dependencies": {
     "@next/env": "^15.5.2",
@@ -35,6 +36,7 @@
     "drizzle-kit": "^0.31.4",
     "supabase": "^2.39.2",
     "tailwindcss": "^4",
+    "tsx": "^4.20.5",
     "tw-animate-css": "^1.3.7",
     "typescript": "^5"
   }
