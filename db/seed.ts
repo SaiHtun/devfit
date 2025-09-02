@@ -121,6 +121,10 @@ const seedData = async () => {
           gender: "unisex" as const,
           buyPrice: "8.99",
           sellPrice: "19.99",
+          imageUrls: [
+            "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bW9kZWx8ZW58MHx8MHx8fDA%3D",
+          ],
         });
       }
     }
@@ -158,6 +162,10 @@ const seedData = async () => {
           gender: "unisex" as const,
           buyPrice: "12.99",
           sellPrice: "29.99",
+          imageUrls: [
+            "https://images.unsplash.com/photo-1625910513520-bed0389ce32f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cG9sbyUyMHNoaXJ0fGVufDB8fDB8fHww",
+            "https://plus.unsplash.com/premium_photo-1683147816511-932c9cc82881?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHBvbG8lMjBzaGlydHxlbnwwfHwwfHx8MA%3D%3D",
+          ],
         });
       }
     }
@@ -193,6 +201,10 @@ const seedData = async () => {
           gender: "unisex" as const,
           buyPrice: "18.99",
           sellPrice: "49.99",
+          imageUrls: [
+            "https://plus.unsplash.com/premium_photo-1726930176764-82601e0159df?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8aG9vZGllcyUyMGdpcmx8ZW58MHx8MHx8fDA%3D",
+            "https://images.unsplash.com/photo-1677706195015-c8d077b0a62d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8aG9vZGllcyUyMGdpcmx8ZW58MHx8MHx8fDA%3D",
+          ],
         });
       }
     }
@@ -224,6 +236,10 @@ const seedData = async () => {
         gender: "unisex" as const,
         buyPrice: "5.99",
         sellPrice: "16.99",
+        imageUrls: [
+          "https://images.unsplash.com/photo-1663573690125-d326a87a2535?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8dG90ZSUyMGJhZ3xlbnwwfHwwfHx8MA%3D%3D",
+          "https://images.unsplash.com/photo-1623222403596-d0255da44c0b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHRvdGUlMjBiYWd8ZW58MHx8MHx8fDA%3D",
+        ],
       });
     }
 
