@@ -100,12 +100,8 @@
           "name": "inventory_product_variant_id_product_variants_id_fk",
           "tableFrom": "inventory",
           "tableTo": "product_variants",
-          "columnsFrom": [
-            "product_variant_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["product_variant_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -268,12 +264,8 @@
           "name": "inventory_reservations_product_variant_id_product_variants_id_fk",
           "tableFrom": "inventory_reservations",
           "tableTo": "product_variants",
-          "columnsFrom": [
-            "product_variant_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["product_variant_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -449,12 +441,8 @@
           "name": "inventory_transactions_product_variant_id_product_variants_id_fk",
           "tableFrom": "inventory_transactions",
           "tableTo": "product_variants",
-          "columnsFrom": [
-            "product_variant_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["product_variant_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -629,12 +617,8 @@
           "name": "product_variants_product_id_products_id_fk",
           "tableFrom": "product_variants",
           "tableTo": "products",
-          "columnsFrom": [
-            "product_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["product_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -644,9 +628,7 @@
         "product_variants_sku_unique": {
           "name": "product_variants_sku_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "sku"
-          ]
+          "columns": ["sku"]
         }
       },
       "policies": {},
@@ -754,13 +736,7 @@
     "public.reservation_type": {
       "name": "reservation_type",
       "schema": "public",
-      "values": [
-        "cart",
-        "order_pending",
-        "order_confirmed",
-        "quote",
-        "hold"
-      ]
+      "values": ["cart", "order_pending", "order_confirmed", "quote", "hold"]
     },
     "public.transaction_type": {
       "name": "transaction_type",
@@ -778,31 +754,17 @@
     "public.customizable_area": {
       "name": "customizable_area",
       "schema": "public",
-      "values": [
-        "front",
-        "back",
-        "left_hand",
-        "right_hand"
-      ]
+      "values": ["front", "back", "left_hand", "right_hand"]
     },
     "public.gender_type": {
       "name": "gender_type",
       "schema": "public",
-      "values": [
-        "unisex",
-        "men",
-        "women"
-      ]
+      "values": ["unisex", "men", "women"]
     },
     "public.product_category": {
       "name": "product_category",
       "schema": "public",
-      "values": [
-        "t-shirt",
-        "polo-shirt",
-        "hoodie",
-        "tote-bag"
-      ]
+      "values": ["t-shirt", "polo-shirt", "hoodie", "tote-bag"]
     }
   },
   "schemas": {},
