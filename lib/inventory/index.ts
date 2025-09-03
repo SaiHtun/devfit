@@ -1,32 +1,12 @@
 import { db } from "@/db";
-import { inventory, productVariants, products } from "@/db/schema";
+import {
+  inventory,
+  type productCategoryEnum,
+  productVariants,
+  products,
+} from "@/db/schema";
 import { eq, sql, desc, asc, and, count, type SQL } from "drizzle-orm";
-import { z } from "zod";
-
-export const inventoryItemSchema = z.object({
-  id: z.string(),
-  sku: z.string(),
-  productName: z.string(),
-  category: z.enum(["t-shirt", "polo-shirt", "hoodie", "tote-bag"]),
-  size: z.string().nullable(),
-  color: z.string().nullable(),
-  quantityOnHand: z.number(),
-  quantityReserved: z.number(),
-  quantityAvailable: z.number(),
-  sellPrice: z.string(),
-  lastModified: z.date(),
-});
-
-export type InventoryItem = z.infer<typeof inventoryItemSchema>;
-
-export interface GetInventoryParams {
-  page?: number;
-  pageSize?: number;
-  category?: string;
-  search?: string;
-  sortBy?: "productName" | "sku" | "quantityOnHand" | "lastModified";
-  sortOrder?: "asc" | "desc";
-}
+import type { InventoryItem, InventorySearchParams } from "./schema";
 
 export interface GetInventoryResult {
   items: InventoryItem[];
@@ -43,7 +23,7 @@ export async function getInventoryData({
   search,
   sortBy = "lastModified",
   sortOrder = "desc",
-}: GetInventoryParams = {}): Promise<GetInventoryResult> {
+}: InventorySearchParams): Promise<GetInventoryResult> {
   const offset = (page - 1) * pageSize;
 
   // Build where conditions
@@ -53,7 +33,7 @@ export async function getInventoryData({
     conditions.push(
       eq(
         products.category,
-        category as "t-shirt" | "polo-shirt" | "hoodie" | "tote-bag",
+        category as (typeof productCategoryEnum.enumValues)[number],
       ),
     );
   }
@@ -110,6 +90,7 @@ export async function getInventoryData({
       color: productVariants.color,
       quantityOnHand: inventory.quantityOnHand,
       quantityReserved: inventory.quantityReserved,
+      buyPrice: productVariants.buyPrice,
       sellPrice: productVariants.sellPrice,
       lastModified: inventory.lastModifiedAt,
     })
@@ -135,6 +116,7 @@ export async function getInventoryData({
     quantityOnHand: row.quantityOnHand,
     quantityReserved: row.quantityReserved,
     quantityAvailable: row.quantityOnHand - row.quantityReserved,
+    buyPrice: row.buyPrice,
     sellPrice: row.sellPrice,
     lastModified: row.lastModified,
   }));

@@ -50,7 +50,11 @@ import {
 } from "@tanstack/react-table";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import type { InventoryItem } from "@/lib/inventory";
+import {
+  type InventorySearchParams,
+  type InventoryItem,
+  inventorySearchParamsSchema,
+} from "@/lib/inventory/schema";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -83,10 +87,10 @@ import {
 // Sortable header component
 interface SortableHeaderProps {
   children: React.ReactNode;
-  sortKey: string;
-  currentSort: string | undefined;
-  currentOrder: string | undefined;
-  onSort: (sortKey: string) => void;
+  sortKey: InventorySearchParams["sortBy"];
+  currentSort: InventorySearchParams["sortBy"];
+  currentOrder: InventorySearchParams["sortOrder"];
+  onSort: (sortKey: InventorySearchParams["sortBy"]) => void;
 }
 
 function SortableHeader({
@@ -143,9 +147,9 @@ function DragHandle({ id }: { id: string }) {
 
 // Create columns function to pass sorting props
 const createColumns = (
-  currentSort: string | undefined,
-  currentOrder: string | undefined,
-  onSort: (sortKey: string) => void,
+  currentSort: InventorySearchParams["sortBy"],
+  currentOrder: InventorySearchParams["sortOrder"],
+  onSort: (sortKey: InventorySearchParams["sortBy"]) => void,
 ): ColumnDef<InventoryItem>[] => [
   {
     id: "drag",
@@ -279,8 +283,15 @@ const createColumns = (
     },
   },
   {
+    accessorKey: "buyPrice",
+    header: () => <div className="text-right">BPrice</div>,
+    cell: ({ row }) => (
+      <div className="text-right font-mono">${row.original.sellPrice}</div>
+    ),
+  },
+  {
     accessorKey: "sellPrice",
-    header: () => <div className="text-right">Price</div>,
+    header: () => <div className="text-right">SPrice</div>,
     cell: ({ row }) => (
       <div className="text-right font-mono">${row.original.sellPrice}</div>
     ),
@@ -354,11 +365,28 @@ export function InventoryDataTable({
   const router = useRouter();
   const searchParams = useSearchParams();
   const [data, setData] = React.useState(initialData);
+  const [parsedParams, setParsedParams] = React.useState<InventorySearchParams>(
+    {
+      page: 1,
+      pageSize: 10,
+      category: "all",
+      search: null,
+      sortBy: "lastModified",
+      sortOrder: "desc",
+    },
+  );
+
+  React.useEffect(() => {
+    const searchParamsObj = Object.fromEntries(searchParams.entries());
+    const parsedObj = inventorySearchParamsSchema.parse(searchParamsObj);
+    setParsedParams(parsedObj);
+  }, [searchParams]);
 
   // Update data when initialData changes (from server)
   React.useEffect(() => {
     setData(initialData);
   }, [initialData]);
+
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -392,30 +420,25 @@ export function InventoryDataTable({
     [router, searchParams],
   );
 
-  const currentSort = searchParams.get("sortBy") || undefined;
-  const currentOrder = searchParams.get("sortOrder") || undefined;
-
   // Handle sorting
   const handleSort = React.useCallback(
-    (sortKey: string) => {
-      const currentSortBy = searchParams.get("sortBy");
-      const currentSortOrder = searchParams.get("sortOrder") || "desc";
-
+    (sortKey: InventorySearchParams["sortBy"]) => {
       let newSortOrder = "desc";
-      if (currentSortBy === sortKey) {
+      if (parsedParams.sortBy === sortKey) {
         // Toggle between asc/desc if clicking the same column
-        newSortOrder = currentSortOrder === "asc" ? "desc" : "asc";
+        newSortOrder = parsedParams.sortOrder === "asc" ? "desc" : "asc";
       }
 
       updateUrl({ sortBy: sortKey, sortOrder: newSortOrder, page: 1 });
     },
-    [updateUrl, searchParams],
+    [updateUrl, parsedParams],
   );
 
   // Generate columns with sorting props
   const columns = React.useMemo(
-    () => createColumns(currentSort, currentOrder, handleSort),
-    [currentSort, currentOrder, handleSort],
+    () =>
+      createColumns(parsedParams.sortBy, parsedParams.sortOrder, handleSort),
+    [parsedParams.sortBy, parsedParams.sortOrder, handleSort],
   );
 
   const dataIds = React.useMemo<UniqueIdentifier[]>(
@@ -452,21 +475,19 @@ export function InventoryDataTable({
   });
 
   // Handle search input with debouncing
-  const [searchValue, setSearchValue] = React.useState(
-    searchParams.get("search") || "",
-  );
+  const [searchValue, setSearchValue] = React.useState("");
 
   // Debounce search updates
   React.useEffect(() => {
     const timeoutId = setTimeout(() => {
-      const currentSearch = searchParams.get("search") || "";
+      const currentSearch = parsedParams.search || "";
       if (searchValue !== currentSearch) {
         updateUrl({ search: searchValue, page: 1 });
       }
     }, 500);
 
     return () => clearTimeout(timeoutId);
-  }, [searchValue, updateUrl, searchParams]);
+  }, [searchValue, updateUrl, parsedParams.search]);
 
   // Handle category filter
   const handleCategoryChange = React.useCallback(
@@ -495,8 +516,6 @@ export function InventoryDataTable({
     }
   }
 
-  const currentCategory = searchParams.get("category") || "all";
-
   return (
     <div className="w-full flex flex-col gap-6">
       <div className="flex items-center justify-between px-4 lg:px-6">
@@ -513,8 +532,11 @@ export function InventoryDataTable({
           </div>
 
           {/* Category Filter */}
-          <Select value={currentCategory} onValueChange={handleCategoryChange}>
-            <SelectTrigger className="w-40">
+          <Select
+            value={parsedParams.category}
+            onValueChange={handleCategoryChange}
+          >
+            <SelectTrigger className="w-full sm:w-40">
               <SelectValue placeholder="All Categories" />
             </SelectTrigger>
             <SelectContent>
@@ -527,7 +549,7 @@ export function InventoryDataTable({
           </Select>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 justify-end sm:justify-start">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
