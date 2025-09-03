@@ -13,10 +13,10 @@ const envSchema = z.object({
   SB_STUDIO_URL: z.url().optional(),
   SB_INBUCKET_URL: z.url().optional(),
   SB_REGION: z.string().default("local"),
+  SB_S3_SECRET_KEY: z.string().optional(),
+  SB_ANON_KEY: z.string().optional(),
 
   SB_DATABASE_URL: z.url(),
-  SB_ANON_KEY: z.string(),
-  SB_S3_SECRET_KEY: z.string(),
 });
 
 function validateEnv() {
