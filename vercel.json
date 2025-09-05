@@ -3,7 +3,7 @@
   "crons": [
     {
       "path": "/api/v1/cron/keep-alive",
-      "schedule": "* 9 * * 1"
+      "schedule": "0 9 * * 1"
     }
   ]
 }
