@@ -15,8 +15,9 @@ const envSchema = z.object({
   SB_REGION: z.string().default("local"),
   SB_S3_SECRET_KEY: z.string().optional(),
   SB_ANON_KEY: z.string().optional(),
-
   SB_DATABASE_URL: z.url(),
+
+  CRON_SECRET: z.string().optional(),
 });
 
 function validateEnv() {
@@ -40,4 +41,5 @@ export const config = {
     anonKey: env.SB_ANON_KEY,
   },
   nodeEnv: { isDevelopment, isProduction },
+  cron_secret: env.CRON_SECRET,
 };
