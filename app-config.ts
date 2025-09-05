@@ -7,15 +7,9 @@ const isProduction = process.env.NODE_ENV === "production";
 loadEnvConfig(process.cwd(), isDevelopment);
 
 const envSchema = z.object({
-  SB_API_URL: z.url().optional(),
-  SB_GRAPHQL_URL: z.url().optional(),
-  SB_S3_STORAGE_URL: z.url().optional(),
-  SB_STUDIO_URL: z.url().optional(),
-  SB_INBUCKET_URL: z.url().optional(),
-  SB_REGION: z.string().default("local"),
-  SB_S3_SECRET_KEY: z.string().optional(),
-  SB_ANON_KEY: z.string().optional(),
-  SB_DATABASE_URL: z.url(),
+  SUPABASE_DATABASE_URL: z.url(),
+  NEXT_PUBLIC_SUPABASE_URL: z.string(),
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string(),
 
   CRON_SECRET: z.string().optional(),
 });
@@ -37,8 +31,9 @@ const env = validateEnv();
 
 export const config = {
   supabase: {
-    databaseUrl: env.SB_DATABASE_URL,
-    anonKey: env.SB_ANON_KEY,
+    databaseUrl: env.SUPABASE_DATABASE_URL,
+    url: env.NEXT_PUBLIC_SUPABASE_URL,
+    anonKey: env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   },
   nodeEnv: { isDevelopment, isProduction },
   cron_secret: env.CRON_SECRET,
