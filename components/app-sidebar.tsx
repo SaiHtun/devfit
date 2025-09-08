@@ -1,7 +1,12 @@
 "use client";
 
 import type * as React from "react";
-import { IconDashboard, IconInnerShadowTop } from "@tabler/icons-react";
+import {
+  IconDashboard,
+  IconArrowsMinimize,
+  IconBox,
+} from "@tabler/icons-react";
+import Link from "next/link";
 
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
@@ -23,8 +28,13 @@ const data = {
   navMain: [
     {
       title: "Inventory",
-      url: "#",
+      url: "/dashboard/inventory",
       icon: IconDashboard,
+    },
+    {
+      title: "Order",
+      url: "/dashboard/order",
+      icon: IconBox,
     },
   ],
 };
@@ -40,10 +50,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               {/* brand */}
-              <div>
-                <IconInnerShadowTop className="!size-5" />
+              <Link href="/dashboard">
+                <IconArrowsMinimize className="!size-5" />
                 <span className="text-base font-semibold">Devfit</span>
-              </div>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
