@@ -366,14 +366,7 @@ export function InventoryDataTable({
   const searchParams = useSearchParams();
   const [data, setData] = React.useState(initialData);
   const [parsedParams, setParsedParams] = React.useState<InventorySearchParams>(
-    {
-      page: 1,
-      pageSize: 10,
-      category: "all",
-      search: null,
-      sortBy: "lastModified",
-      sortOrder: "desc",
-    },
+    inventorySearchParamsSchema.parse({}),
   );
 
   React.useEffect(() => {
