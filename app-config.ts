@@ -1,7 +1,7 @@
 import z from "zod";
 import { loadEnvConfig } from "@next/env";
 
-const isDevelopment = process.env.NODE_ENV === "development";
+const isDevelopment = process.env.NODE_ENV === "development" || process.env.NODE_ENV === undefined;
 const isProduction = process.env.NODE_ENV === "production";
 
 loadEnvConfig(process.cwd(), isDevelopment);
@@ -38,3 +38,5 @@ export const config = {
   nodeEnv: { isDevelopment, isProduction },
   cron_secret: env.CRON_SECRET,
 };
+console.log(process.env.NODE_ENV)
+console.log(config)
