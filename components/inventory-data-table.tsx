@@ -57,7 +57,6 @@ import {
 } from "@/lib/inventory/schema";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -127,17 +126,32 @@ function SortableHeader({
 }
 
 function DragHandle({ id }: { id: string }) {
-  const { attributes, listeners } = useSortable({
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
     id,
   });
 
   return (
     <Button
+      ref={setNodeRef}
       {...attributes}
       {...listeners}
       variant="ghost"
       size="icon"
-      className="text-muted-foreground size-7 hover:bg-transparent"
+      className="text-muted-foreground size-7 hover:bg-transparent cursor-grab active:cursor-grabbing"
+      style={{
+        transform: transform
+          ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
+          : undefined,
+        transition,
+        opacity: isDragging ? 0.5 : 1,
+      }}
     >
       <IconGripVertical className="text-muted-foreground size-3" />
       <span className="sr-only">Drag to reorder</span>
@@ -155,32 +169,6 @@ const createColumns = (
     id: "drag",
     header: () => null,
     cell: ({ row }) => <DragHandle id={row.original.id} />,
-  },
-  {
-    id: "select",
-    header: ({ table }) => (
-      <div className="flex items-center justify-center">
-        <Checkbox
-          checked={
-            table.getIsAllPageRowsSelected() ||
-            (table.getIsSomePageRowsSelected() && "indeterminate")
-          }
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-        />
-      </div>
-    ),
-    cell: ({ row }) => (
-      <div className="flex items-center justify-center">
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      </div>
-    ),
-    enableSorting: false,
-    enableHiding: false,
   },
   {
     accessorKey: "productName",
@@ -286,7 +274,7 @@ const createColumns = (
     accessorKey: "buyPrice",
     header: () => <div className="text-right">BPrice</div>,
     cell: ({ row }) => (
-      <div className="text-right font-mono">${row.original.sellPrice}</div>
+      <div className="text-right font-mono">${row.original.buyPrice}</div>
     ),
   },
   {
@@ -639,8 +627,7 @@ export function InventoryDataTable({
         {/* Pagination */}
         <div className="flex items-center justify-between px-4">
           <div className="text-muted-foreground hidden flex-1 text-sm lg:flex">
-            {table.getFilteredSelectedRowModel().rows.length} of {totalCount}{" "}
-            row(s) selected.
+            Showing {data.length} of {totalCount} items.
           </div>
           <div className="flex w-full items-center gap-8 lg:w-fit">
             <div className="hidden items-center gap-2 lg:flex">

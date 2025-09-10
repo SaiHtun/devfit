@@ -50,7 +50,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               {/* brand */}
-              <Link href="/dashboard">
+              <Link href="/dashboard" className="!w-fit">
                 <IconArrowsMinimize className="!size-5" />
                 <span className="text-base font-semibold">Devfit</span>
               </Link>

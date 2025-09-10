@@ -25,6 +25,7 @@ export const inventoryItemSchema = z.object({
   quantityOnHand: z.number(),
   quantityReserved: z.number(),
   quantityAvailable: z.number(),
+  buyPrice: z.string(),
   sellPrice: z.string(),
   lastModified: z.date(),
 });
