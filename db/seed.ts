@@ -118,7 +118,7 @@ const seedData = async () => {
             unit: "cm" as const,
           },
           material: "100% Cotton",
-          gender: "unisex" as const,
+          gender: "unisex",
           buyPrice: "8.99",
           sellPrice: "19.99",
           imageUrls: [
@@ -159,7 +159,7 @@ const seedData = async () => {
             unit: "cm" as const,
           },
           material: "Cotton Blend",
-          gender: "unisex" as const,
+          gender: "unisex",
           buyPrice: "12.99",
           sellPrice: "29.99",
           imageUrls: [
@@ -198,7 +198,7 @@ const seedData = async () => {
             unit: "cm" as const,
           },
           material: "Cotton/Polyester Blend",
-          gender: "unisex" as const,
+          gender: "unisex",
           buyPrice: "18.99",
           sellPrice: "49.99",
           imageUrls: [
@@ -233,7 +233,7 @@ const seedData = async () => {
           unit: "cm" as const,
         },
         material: "Canvas",
-        gender: "unisex" as const,
+        gender: "unisex",
         buyPrice: "5.99",
         sellPrice: "16.99",
         imageUrls: [

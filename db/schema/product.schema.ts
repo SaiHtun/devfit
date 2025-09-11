@@ -3,7 +3,6 @@ import {
   index,
   integer,
   jsonb,
-  pgEnum,
   pgTable,
   text,
   timestamp,
@@ -17,24 +16,6 @@ import {
   inventoryTransactions,
 } from "./inventory.schema";
 import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
-// ==================
-// ENUMS
-// ==================
-export const productCategoryEnum = pgEnum("product_category", [
-  "t-shirt",
-  "polo-shirt",
-  "hoodie",
-  "tote-bag",
-]);
-
-export const genderTypeEnum = pgEnum("gender_type", ["unisex", "men", "women"]);
-
-export const customizableAreaEnum = pgEnum("customizable_area", [
-  "front",
-  "back",
-  "left_hand",
-  "right_hand",
-]);
 
 // ==================
 // PRODUCTS & VARIANTS
@@ -45,12 +26,12 @@ export const products = pgTable(
     id: uuid("id").primaryKey().defaultRandom(),
     name: varchar("name", { length: 200 }).notNull(),
     description: text("description"),
-    category: productCategoryEnum("category").notNull(),
+    category: varchar("category").notNull(),
     tags: text("tags").array(),
     customizableAreas:
       jsonb("customizable_areas").$type<
         Array<{
-          area: (typeof customizableAreaEnum.enumValues)[number];
+          area: string;
           maxSize: { width: number; height: number };
         }>
       >(),
@@ -89,7 +70,7 @@ export const productVariants = pgTable(
     imageUrls: jsonb("image_urls").$type<string[]>().default([]),
 
     material: varchar("material", { length: 100 }),
-    gender: genderTypeEnum("gender"),
+    gender: varchar("gender", { length: 20 }).notNull(),
 
     buyPrice: decimal("buy_price", { precision: 10, scale: 2 }).notNull(),
     sellPrice: decimal("sell_price", { precision: 10, scale: 2 }).notNull(),
